@@ -24,7 +24,7 @@ export default React.createClass({
                         Let's define <strong>elements</strong> we want to fetch:
                     </p>
                     <Highlight className='javascript'>
-                        {`const elements = [
+{`const elements = [
     'address_line_1',
     'address_line_2',
     'address_line_3',
@@ -37,7 +37,7 @@ export default React.createClass({
                         And for the example's sake, our address object will look like this:
                     </p>
                     <Highlight className='javascript'>
-                        {`const address = {
+{`const address = {
     address_line_1: 'aline1',
     address_line_2: 'aline2',
     address_line_3: 'aline3',
@@ -50,7 +50,7 @@ export default React.createClass({
                         Magic:
                     </p>
                     <Highlight className='javascript'>
-                        {`const getFormattedAddress = pipe(
+{`const getFormattedAddress = pipe(
     props,
     juxt([compose(join(', '), dropLast(1)),
           compose(join(' '), takeLast(1))]),
@@ -66,7 +66,7 @@ getFormattedAddress(elements, address);
                         Since we are using the same <strong>number value</strong>, we can also make that hard-coded <strong>1</strong> dynamic:
                     </p>
                     <Highlight className='javascript'>
-                        {`const getFormattedAddress = uncurryN(2, n => pipe(
+{`const getFormattedAddress = uncurryN(2, n => pipe(
     props,
     juxt([compose(join(', '), dropLast(n)),
           compose(join(' '), takeLast(n))]),

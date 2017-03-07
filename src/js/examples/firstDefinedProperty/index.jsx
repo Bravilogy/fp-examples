@@ -24,7 +24,7 @@ export default React.createClass({
                         Let's define our <strong>user</strong> first:
                     </p>
                     <Highlight className='javascript'>
-                        {`const user = {
+{`const user = {
     firstName: 'Freddy Krueger',
     username: 'magic_pie'
 };`}
@@ -33,13 +33,12 @@ export default React.createClass({
                         ... and our function:
                     </p>
                     <Highlight className='javascript'>
-                        {`const getName = compose(apply(or), props);
+{`const getName = compose(apply(or), props);
 getName(['firstName', 'username'], user);
 // => Freddy Krueger
 
 getName(['firstName', 'username'], { username: 'magic_pie' });
-// => magic_pie
-`}
+// => magic_pie`}
                     </Highlight>
                     <p>
                         {Tags(['compose', 'apply', 'or', 'props'])}
@@ -53,7 +52,7 @@ getName(['firstName', 'username'], { username: 'magic_pie' });
                         Let's change our functionality a bit:
                     </p>
                     <Highlight className='javascript'>
-                        {`const firstProp = compose(reduce(or, null), props);
+{`const firstProp = compose(reduce(or, null), props);
 
 const propsToTake = ['firstName', 'lastName', 'username'];
 
@@ -72,9 +71,7 @@ firstProp(propsToTake, {
 });
 // => Krueger
 
-firstProp(propsToTake, {
-    username: 'magic_pie'
-});
+firstProp(propsToTake, { username: 'magic_pie' });
 // => magic_pie`}
                     </Highlight>
                     <p>
@@ -85,7 +82,7 @@ firstProp(propsToTake, {
                         it more dynamic.
                     </p>
                     <Highlight className='javascript'>
-                        {`const firstProp = curry(compose(reduce(or, null), props));
+{`const firstProp = curry(compose(reduce(or, null), props));
 
 const getName = firstProp(['firstName', 'lastName', 'username']);
 
@@ -98,15 +95,10 @@ const user = {
 getName(user);
 // => Freddy
 
-getName({
-    lastName: 'Krueger',
-    username: 'magic_pie'
-});
+getName({ lastName: 'Krueger', username: 'magic_pie' });
 // => Krueger
 
-getName({
-    username: 'magic_pie'
-});
+getName({ username: 'magic_pie' });
 // => magic_pie`}
                     </Highlight>
                     <p>
