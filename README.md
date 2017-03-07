@@ -17,5 +17,5 @@ npm run start
 npm run production
 ```
 
-[Let's get this thing moving.](http://envious-smile.surge.sh/#/examples/first-defined-property)
+[Let's get this thing moving.](http://envious-smile.surge.sh/#/)
 
