@@ -1,5 +1,7 @@
 # fp-examples
-A collection of real world JS problems and their functional solutions. 
+A collection of real world JS problems and their functional solutions.
+
+[Let's get this thing moving.](http://envious-smile.surge.sh/#/)
 
 (Work in progress)
 
@@ -16,6 +18,3 @@ npm run start
 ```
 npm run production
 ```
-
-[Let's get this thing moving.](http://envious-smile.surge.sh/#/)
-
