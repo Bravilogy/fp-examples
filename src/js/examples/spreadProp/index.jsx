@@ -5,7 +5,7 @@ import React from 'react';
 import Highlight from 'react-highlight';
 import Problem from 'pages/components/problem';
 import Solution from 'pages/components/solution';
-import { Tags, Repl } from 'pages/components/ramda-helpers';
+import { Tags } from 'pages/components/ramda-helpers';
 
 export default React.createClass({
     displayName: 'SpreadProperty',
@@ -46,7 +46,9 @@ export default React.createClass({
 spread('home', state);
 // => { dispatch: function() {}, title: 'Home page', resources: [] }`}
                     </Highlight>
-
+                    <p>
+                        {Tags(['converge', 'merge', 'dissoc', 'prop'])}
+                    </p>
                 </Solution>
             </div>
         );
