@@ -3,7 +3,8 @@
     "description": "Functional programming, yo",
     "scripts": {
         "start": "webpack-dev-server --content-base=public",
-        "production": "webpack --config webpack.config.prod.js --progress -p"
+        "production": "webpack --config webpack.config.prod.js --progress -p",
+        "deploy": "cd public;surge"
     },
     "dependencies": {
         "babel-core": "^6.23.1",
