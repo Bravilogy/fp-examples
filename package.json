@@ -28,5 +28,8 @@
         "sass-loader": "^6.0.2",
         "style-loader": "^0.13.2",
         "webpack": "1"
+    },
+    "devDependencies": {
+        "webpack-dev-server": "1"
     }
 }
