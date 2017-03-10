@@ -1,4 +1,5 @@
 import EncodeUrl from 'examples/encodeUrl';
+import SpreadProp from 'examples/spreadProp';
 import JoinAddressProps from 'examples/joinAddressProps';
 import FirstDefinedProperty from 'examples/firstDefinedProperty';
 
@@ -18,5 +19,10 @@ export default [
         title: 'Encode URL',
         path: 'encode-url',
         component: EncodeUrl,
+    },
+    {
+        title: 'Spread Property',
+        path: 'spread-property',
+        component: SpreadProp,
     }
 ];
