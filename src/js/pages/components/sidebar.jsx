@@ -1,7 +1,7 @@
 import React from 'react';
 import examples from 'examples/index';
 import { IndexLink, Link } from 'react-router';
-import { map } from 'ramda';
+import { map, length } from 'ramda';
 
 const LinkComponent = link => (
     <li key={link.path}>
@@ -13,6 +13,15 @@ const LinkComponent = link => (
 
 export default () => (
     <aside className='menu'>
+        <nav className='level'>
+            <div className='level-item has-text-centered'>
+                <div>
+                    <p className='heading'>Total examples</p>
+                    <p className='title'>{length(examples)}</p>
+                </div>
+            </div>
+        </nav>
+        <hr/>
         <p className='menu-label'>
             General
         </p>
