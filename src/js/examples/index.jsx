@@ -1,5 +1,6 @@
 import EncodeUrl from 'examples/encodeUrl';
 import SpreadProp from 'examples/spreadProp';
+import ChainOfEvents from 'examples/chainOfEvents';
 import JoinAddressProps from 'examples/joinAddressProps';
 import FirstDefinedProperty from 'examples/firstDefinedProperty';
 
@@ -24,5 +25,10 @@ export default [
         title: 'Spread Property',
         path: 'spread-property',
         component: SpreadProp,
+    },
+    {
+        title: 'Chain of Events',
+        path: 'chain-of-events',
+        component: ChainOfEvents,
     }
 ];

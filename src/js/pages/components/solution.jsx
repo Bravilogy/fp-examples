@@ -6,7 +6,7 @@ export default ({ children, solutionLink}) => (
     <section>
         <h4>Solution</h4>
         {children}
-        <Repl link={solutionLink} />
+        {solutionLink ? <Repl link={solutionLink} /> : <hr/>}
         <Congratulate />
     </section>
 );
