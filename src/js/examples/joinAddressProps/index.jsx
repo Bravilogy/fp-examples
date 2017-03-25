@@ -15,13 +15,13 @@ export default React.createClass({
         return (
             <div className='content'>
                 <Problem>
-                    We need to get specific address elements from address object. Then we need to join last 2 elements
-                    with an <strong>empty space</strong>, join the rest elements with <strong>comma</strong>. And finally join the two
+                    We need to get specific elements from an address object. Then we need to join the last 2 elements
+                    with an <strong>empty space</strong>, join the rest with <strong>comma</strong>. And finally join the two
                     groups together with an <strong>empty space</strong> again.
                 </Problem>
                 <Solution solutionLink='https://goo.gl/PRBaJW'>
                     <p>
-                        Let's define <strong>elements</strong> we want to fetch:
+                        Let's define the <strong>elements</strong> we're interested in:
                     </p>
                     <Highlight className='javascript'>
 {`const elements = [
@@ -63,7 +63,7 @@ getFormattedAddress(elements, address);
                         {Tags(['pipe', 'props', 'juxt', 'compose', 'join', 'dropLast', 'takeLast'])}
                     </p>
                     <p>
-                        Since we are using the same <strong>number value</strong>, we can also make that hard-coded <strong>1</strong> dynamic:
+                        Since we are using the same <strong>number value</strong> (dropLast(<strong>1</strong>), takeLast(<strong>1</strong>)), we can also make that hard-coded <strong>1</strong> dynamic:
                     </p>
                     <Highlight className='javascript'>
 {`const getFormattedAddress = uncurryN(2, n => pipe(

@@ -39,7 +39,7 @@ export default React.createClass({
 }`}
                     </Highlight>
                     <p>
-                        Ok, now let's take a bowl, throw a few beautiful functions in there and stirrrrrr:
+                        Ok, now let's take a bowl, throw a few beautiful functions in there and stirrrrrr (... it up!):
                     </p>
                     <Highlight className='javascript'>
 {`const spread = converge(merge, [dissoc, prop]);

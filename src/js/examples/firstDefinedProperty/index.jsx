@@ -12,8 +12,8 @@ export default React.createClass({
             <div className='content'>
                 <Problem>
                     <p>
-                        We have a <strong>user</strong> object and we want to get a <strong>first name</strong>. If it
-                        is not there, we want to get a <strong>username</strong>.
+                        We have a <strong>user</strong> object and we want to get a <strong>first name</strong> property. If it
+                        is not there, then we want to get a <strong>username</strong> prop.
                     </p>
                     <p>
                         <strong>Simple.</strong>
@@ -78,7 +78,7 @@ firstProp(propsToTake, { username: 'magic_pie' });
                         {Tags(['compose', 'reduce', 'or', 'props'])}
                     </p>
                     <p>
-                        But it's a bit frustrating to pass <strong>propsToTake</strong> all the time, right? Let's make
+                        But it's a bit frustrating to have to pass <strong>propsToTake</strong> all the time, right? Let's make
                         it more dynamic.
                     </p>
                     <Highlight className='javascript'>
@@ -105,7 +105,7 @@ getName({ username: 'magic_pie' });
                         {Tags(['curry', 'compose', 'reduce', 'or', 'props'])}
                     </p>
                     <p>
-                        Much better, right?
+                        Much better, don't you think?
                     </p>
                 </Solution>
             </div>
