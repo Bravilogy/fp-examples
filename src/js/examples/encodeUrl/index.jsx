@@ -35,7 +35,7 @@ encodeUrl('http://example.com', {
 // => http://example.com?id=1&topic=Javascript&chapter=Functional%20%26%20Awesome`}
                     </Highlight>
                     <p>
-                        {Tags(['compose', 'join', 'map', 'toPairs', 'useWith', 'when', 'complement', 'contains', 'concat'])}
+                        {Tags(['compose', 'join', 'map', 'toPairs', 'useWith', 'when', 'complement', 'contains', 'concat', '__'])}
                     </p>
                 </Solution>
             </div>
