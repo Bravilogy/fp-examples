@@ -1,7 +1,7 @@
 import React from 'react';
+import { map, length } from 'ramda';
 import examples from 'examples/index';
 import { IndexLink, Link } from 'react-router';
-import { map, length } from 'ramda';
 
 const LinkComponent = link => (
     <li key={link.path}>
@@ -10,6 +10,8 @@ const LinkComponent = link => (
         </Link>
     </li>
 );
+
+const makeLinks = map(LinkComponent);
 
 export default () => (
     <aside className='menu'>
@@ -36,7 +38,7 @@ export default () => (
             Examples
         </p>
         <ul className='menu-list'>
-            {map(LinkComponent, examples)}
+            {makeLinks(examples)}
         </ul>
     </aside>
 );

@@ -6,7 +6,7 @@ const Tag = tag => (
         <a href={`http://ramdajs.com/docs/#${tag}`} target='_blank'>{tag}</a>
     </span>
 );
-export const Tags = tags => map(Tag, tags);
+export const Tags = map(Tag);
 
 export const Repl = props => (
     <div>
