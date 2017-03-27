@@ -26,7 +26,8 @@ const descriptions = [
     'You are one step closer to becoming fully <strong>functional</strong>.',
     'You can now haz <strong>cheez</strong>, safely!',
     'You can now speak <strong>Funk Chanel</strong>.',
-    'Welcome to <strong>Funk Chanel</strong>.'
+    'Welcome to <strong>Funk Chanel</strong>.',
+    'The world is functional, again.'
 ];
 
 export default () => (
