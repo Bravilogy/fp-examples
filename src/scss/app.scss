@@ -4,3 +4,11 @@
 pre {
   margin-bottom: 1em;
 }
+
+.message.is-success .message-header {
+  background-color: #00d1b2;
+}
+
+.message.is-success .message-body {
+  border-color: #00d1b2;
+}
