@@ -1,9 +1,9 @@
 import React from 'react';
 import examples from 'examples/index';
-import R, { pipe, find, propEq, prop } from 'ramda';
+import { uncurryN, pipe, find, propEq, prop } from 'ramda';
 
 const getExampleComponent = pipe(
-    R.uncurryN(2, id => find(propEq('path', id))),
+    uncurryN(2, id => find(propEq('path', id))),
     prop('component')
 );
 
