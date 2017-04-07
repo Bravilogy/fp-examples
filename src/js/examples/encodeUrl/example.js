@@ -1,5 +1,6 @@
 import {
     __,
+    map,
     when,
     join,
     concat,
@@ -10,7 +11,7 @@ import {
     complement,
 } from 'ramda';
 
-const formatParameter = (key, value) => `${key}=${encodeURIComponent(value)}`;
+const formatParameter = ([key, value]) => `${key}=${encodeURIComponent(value)}`;
 
 const encodeParams = compose(join('&'), map(formatParameter), toPairs);
 

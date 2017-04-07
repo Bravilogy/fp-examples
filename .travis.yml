@@ -1,3 +1,9 @@
 language: node_js
 node_js:
   - "7"
+script: npm test && npm run production
+deploy:
+  provider: surge
+  project: ./public/
+  domain: envious-smile.surge.sh
+  skip_cleanup: true

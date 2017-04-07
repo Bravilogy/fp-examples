@@ -17,7 +17,7 @@ export default React.createClass({
                     We need to <strong>encode</strong> params and then concatenate everything together. Our function
                     will also add a <strong>?</strong> at the end of the url if it is not there already.
                 </Problem>
-                <Solution solutionLink='https://goo.gl/XLkq2l'>
+                <Solution solutionLink='https://goo.gl/u8ebJf'>
                     <Highlight className='javascript'>
 {"const formatParameter = ([key, value]) => `${key}=${encodeURIComponent(value)}`;\n\n"}
 {`const encodeParams = compose(join('&'), map(formatParameter), toPairs);
