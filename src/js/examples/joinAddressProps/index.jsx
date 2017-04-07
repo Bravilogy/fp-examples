@@ -19,7 +19,7 @@ export default React.createClass({
                     with an <strong>empty space</strong>, join the rest with <strong>comma</strong>. And finally join the two
                     groups together with an <strong>empty space</strong> again.
                 </Problem>
-                <Solution solutionLink='https://goo.gl/PRBaJW'>
+                <Solution solutionLink='https://goo.gl/IuGOe0'>
                     <p>
                         Let's define the <strong>elements</strong> we're interested in:
                     </p>
@@ -50,13 +50,13 @@ export default React.createClass({
                         Magic:
                     </p>
                     <Highlight className='javascript'>
-{`const getFormattedAddress = pipe(
+{`const joinAddressProps = pipe(
     props,
     juxt([compose(join(', '), dropLast(1)),
           compose(join(' '), takeLast(1))]),
     join(' ')
 );
-getFormattedAddress(elements, address);
+joinAddressProps(elements, address);
 // => aline1, aline2, aline3, London, Functional FN1 33T`}
                     </Highlight>
                     <p>
@@ -66,17 +66,17 @@ getFormattedAddress(elements, address);
                         Since we are using the same <strong>number value</strong> (dropLast(<strong>1</strong>), takeLast(<strong>1</strong>)), we can also make that hard-coded <strong>1</strong> dynamic:
                     </p>
                     <Highlight className='javascript'>
-{`const getFormattedAddress = uncurryN(2, n => pipe(
+{`const joinAddressProps = uncurryN(3, n => pipe(
     props,
     juxt([compose(join(', '), dropLast(n)),
           compose(join(' '), takeLast(n))]),
     join(' ')
 ));
 // Let's pass it during the call instead
-getFormattedAddress(1, elements, address);
+joinAddressProps(1, elements, address);
 // => aline1, aline2, aline3, London, Functional FN1 33T
 
-getFormattedAddress(2, elements, address);
+joinAddressProps(2, elements, address);
 // => aline1, aline2, aline3, London Functional FN1 33T`}
                     </Highlight>
                     <p>

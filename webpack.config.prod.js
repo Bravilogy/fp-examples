@@ -7,7 +7,7 @@ process.noDeprecation = true;
 module.exports = {
     entry: './src/js/app.js',
     output: {
-        path: './public',
+        path: path.resolve(__dirname, 'public'),
         filename: 'bundle.js'
     },
     module: {

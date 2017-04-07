@@ -1,6 +1,6 @@
 /* global describe, it */
 import chai from 'chai';
-import { spread } from '../src/js/examples/spreadProp/code.js';
+import { spread } from '../src/js/examples/spreadProp/example';
 
 const expect = chai.expect;
 
@@ -14,10 +14,7 @@ describe('spread function', function () {
     };
 
     it('is curried', function () {
-        const curried = spread('home');
-        expect(curried).to.be.a('function');
-        expect(curried(state))
-            .to.have.all.keys(['dispatch', 'title', 'resources']);
+        expect(spread('home')).to.be.a('function');
     });
 
     it('spreads a single property of an object', function () {
