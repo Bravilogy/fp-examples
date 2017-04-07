@@ -1,24 +1,18 @@
 import {
     __,
     when,
-    pipe,
     join,
-    flip,
     concat,
-    values,
     useWith,
+    toPairs,
+    compose,
     contains,
     complement,
-    mapObjIndexed,
 } from 'ramda';
 
 const formatParameter = (key, value) => `${key}=${encodeURIComponent(value)}`;
 
-const encodeParams = pipe(
-    mapObjIndexed(flip(formatParameter)),
-    values,
-    join('&')
-);
+const encodeParams = compose(join('&'), map(formatParameter), toPairs);
 
 export const encodeUrl = useWith(concat, [
     when(complement(contains('?')), concat(__, '?')),
