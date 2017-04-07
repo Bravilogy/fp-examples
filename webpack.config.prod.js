@@ -2,6 +2,8 @@
 const path = require('path');
 const webpack = require('webpack');
 
+process.noDeprecation = true;
+
 module.exports = {
     entry: './src/js/app.js',
     output: {
@@ -14,21 +16,21 @@ module.exports = {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
-                query: {
+                options: {
                     presets: ['es2015', 'stage-0', 'react' ]
                 }
             },
             {
                 test: /\.scss$/,
                 exclude: /node_modules/,
-                loaders: ['style', 'css', 'sass']
+                loaders: ['style-loader', 'css-loader', 'sass-loader']
             }
         ]
     },
     resolve: {
-        extensions: ['', '.js', '.jsx', '.scss'],
-        root: [
-            path.resolve('./src/js')
+        extensions: ['.js', '.jsx', '.scss'],
+        modules: [
+            path.resolve('./src/js'), 'node_modules'
         ]
     },
     plugins: [
