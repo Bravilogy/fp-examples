@@ -31,7 +31,7 @@ const descriptions = [
 ];
 
 export default () => (
-    <article className='message is-success'>
+    <article className='message is-primary'>
         <div className='message-header'>
             <p>{getRandom(titles)}</p>
         </div>
