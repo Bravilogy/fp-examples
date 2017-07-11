@@ -6,7 +6,7 @@ import React from 'react';
 import Highlight from 'react-highlight';
 import Problem from 'pages/components/problem';
 import Solution from 'pages/components/solution';
-import { Tags } from 'pages/components/ramda-helpers';
+import {Tags} from 'pages/components/ramda-helpers';
 
 export default () => (
     <div className='content'>
@@ -35,18 +35,15 @@ export default () => (
                 <small>It's <strong>OK</strong>, they're clickable ;)</small>
             </p>
             <p>
-                We would like to <strong>fetch</strong> the user first, with an ID. <strong>then</strong> get
-                the ID prop from the <strong>JSON</strong> response (<em>for example's sake</em>), <strong>then</strong>
-                get all posts by that user and while we're at it, we need to
+                We would like to <strong>fetch</strong> the user with an ID. <strong>then</strong> get all
+                posts by that user and while we're at it, we need to
                 get all comments for each post retrieved.
             </p>
             <p>
                 <small>(see what I did there? got you in the mood of <strong>fetch</strong> api.)</small>
             </p>
             <p>
-                As a bonus, let's remove <strong>userId</strong> from each post and <strong>postId</strong> from
-                each comment.
-                Also, we will nest all posts under <strong>posts</strong> property and each post object will
+                We will also nest all posts under <strong>posts</strong> property and each post object will
                 have a new <strong>comments</strong> property for fetched comments.
             </p>
         </Problem>
@@ -66,8 +63,8 @@ export default () => (
                 And let's define our <code>GETs</code>:
             </p>
             <Highlight className='javascript'>
-                {`const getUser = id =>
-    httpGet(\`http://jsonplaceholder.typicode.com/users/\${id}\`);
+                {`const getUser = userId =>
+    httpGet(\`http://jsonplaceholder.typicode.com/users/\${userId}\`);
 
 const getPosts = userId =>
     httpGet(\`http://jsonplaceholder.typicode.com/posts?userId=\${userId}\`);
@@ -76,108 +73,54 @@ const getComments = postId =>
     httpGet(\`http://jsonplaceholder.typicode.com/comments?postId=\${postId}\`);`}
             </Highlight>
             <p>
-                ...and our main function. Well, we could stick with <code>dot</code> chaining and we could do:
+                Now as per our example, we need to fetch the user and their posts using an ID. These two API calls
+                do not need to depend on each other, because in our example, both, the user endpoint
+                and the posts endpoint receive a <strong>userId</strong>.
+            </p>
+            <p>
+                Therefore we can treat our <strong>Future</strong> as an applicative functor here:
             </p>
             <Highlight className='javascript'>
-                {`// we kick things off by fetching the user first
-const getUserWithPosts = id => getUser(id)
-    // now that we have the user, we chain to another Future, in this case - getPosts
-    .chain(user => getPosts(user.id)
-        // and now for each post, we need to return a Future, but we don't want to end up with
-        // [ Future response, Future response, Future response, ... ] but rather
-        // Future([ response, response, response, ... ]). So we need to
-        // flip the types around so to say. This is where traverse
-        // comes in and since traverse will return us another
-        // Future, we can chain to it straight away:
-        .chain(traverse(Future.of, post => getComments(post.id)
-            // and once we get all comments, we can start
-            // destructuring and spreading things
-            // to fit our goals
-            .map(comments => ({
-                // remember? we need to remove userId from each post
-                ...dissoc('userId', post),
-                // and postId from each comment
-                comments: comments.map(dissoc('postId'))
-            }))))
-        // and finally, we spread the user and attach posts
-        // with their precious comments.
-        .map(posts => ({ ...user, posts }) ));
-
-getUserWithPosts(1).fork(console.error, console.log);`}
+                {`const getUserWithPosts = id =>
+    Future.of(user => posts => /* do something with user and posts */)
+        .ap(getUser(id))
+        .ap(getPosts(id));
+`}
             </Highlight>
             <p>
-                {Tags(['traverse', 'dissoc'])}
-            </p>
-            <p>
-                Let's re-think the whole thing in <code>ramda</code>:
+                Now we can chain more the <strong>getComments</strong> call with <strong>getPosts</strong>, however
+                we need to keep in mind that <strong>getPosts</strong> will return an array of posts and the result
+                will be wrapped in <strong>Future</strong>. So if we <strong>map</strong> over them and
+                call <strong>getComments</strong> for each post, we will end up
+                with a Future of an Array of Future<strong>s</strong> of comment:
                 <br/>
-                <small>some boilerplate first...</small>
+                <strong>Future ( Array ( Future ( comment ) ) )</strong>
+            </p>
+            <p>
+                Instead, we will need to use <strong>traverse</strong> and this will give us a Future of Array of comments.
+            </p>
+            <p>
+                We can also create a function that receives an object and an array, and nests an array under an object with a specified key.
             </p>
             <Highlight className='javascript'>
-                {`const httpGet = url =>
-    new Future((reject, resolve) =>
-        fetch(url)
-            .then(res => res.json().then(resolve))
-            .catch(reject));
+                {`const nestUnder = key => useWith(merge, [identity, objOf(key)]);
 
-const getUser = id =>
-    httpGet(\`http://jsonplaceholder.typicode.com/users/\${id}\`);
-
-const getPosts = userId =>
-    httpGet(\`http://jsonplaceholder.typicode.com/posts?userId=\${userId}\`);
-
-const getComments = postId =>
-    httpGet(\`http://jsonplaceholder.typicode.com/comments?postId=\${postId}\`);`}
+const getUserWithPosts = id =>
+    Future.of(nestUnder('posts'))
+        .ap(getUser(id))
+        .ap(getPosts(id)
+            .chain(traverse(Future.of, post => getComments(post.id)));
+`}
             </Highlight>
             <p>
-                Looking at our previous function, two things are clear - we need a function that will
-                <code>dissoc</code> (remove)
-                specific key from the list of things, be it <strong>posts</strong> or <strong>comments</strong> and at
-                the same time, it should
-                create a new object and nest itself under a pre-defined key, so to say. But since we will be
-                dealing with a monad here,
-                we need to <code>lift</code> things up:
+                {Tags(['traverse', 'merge', 'useWith', 'identity', 'objOf'])}
+            </p>
+            <p>
+                And finally, we will do the same type of nesting, but for comments this time and here is the full code:
             </p>
             <Highlight className='javascript'>
-                {`const addRemoveKey = (withKey, withoutKey) =>
-    lift(compose(objOf(withKey), map(dissoc(withoutKey))));`}
-            </Highlight>
-            <p>
-                {Tags(['lift', 'compose', 'objOf', 'map', 'dissoc'])}
-            </p>
-            <p>
-                And the second function, more of a function factory that will fetch a resource and merge
-                it with another resource, for example - a <strong>user</strong> with <strong>posts</strong> and a single
-                <strong>post</strong> with <strong>comments</strong>. It will do so by using the function above:
-            </p>
-            <Highlight className='javascript'>
-                {`const mergeWithResource = (withKey, withoutKey, fn) => converge(lift(merge), [
-    Future.of,
-    compose(addRemoveKey(withKey, withoutKey), fn, prop('id'))
-]);
-
-const postWithComments = traverse(Future.of, mergeWithResource('comments', 'postId', getComments));
-const userWithPosts = mergeWithResource('posts', 'userId', compose(chain(postWithComments), getPosts));`}
-            </Highlight>
-            <p>
-                {Tags(['converge', 'lift', 'merge', 'compose', 'prop'])}
-            </p>
-            <p>
-                And the final line, our main composition with <code>composeK</code> since we're dealing with a monad
-                here:
-            </p>
-            <Highlight className='javascript'>
-                {'const getUserWithPosts = composeK(userWithPosts, getUser);'}
-            </Highlight>
-            <p>
-                {Tags(['composeK'])}
-            </p>
-            <p>
-                Finally, the full code with 2 versions:
-            </p>
-            <Highlight>
                 {`import R from 'ramda';
-import Future from 'ramda-fantasy';
+import { Future } from 'ramda-fantasy';
 
 R.compose(R.map(([k, v]) => global[k] = v), R.toPairs)(R);
 
@@ -187,8 +130,8 @@ const httpGet = url =>
             .then(res => res.json().then(resolve))
             .catch(reject));
 
-const getUser = id =>
-    httpGet(\`http://jsonplaceholder.typicode.com/users/\${id}\`);
+const getUser = userId =>
+    httpGet(\`http://jsonplaceholder.typicode.com/users/\${userId}\`);
 
 const getPosts = userId =>
     httpGet(\`http://jsonplaceholder.typicode.com/posts?userId=\${userId}\`);
@@ -196,39 +139,19 @@ const getPosts = userId =>
 const getComments = postId =>
     httpGet(\`http://jsonplaceholder.typicode.com/comments?postId=\${postId}\`);
 
+const nestUnder = key => useWith(merge, [identity, objOf(key)]);
 
-/* -------------------------- 1 -------------------------- */
-
-const addRemoveKey = (withKey, withoutKey) =>
-        lift(compose(objOf(withKey), map(dissoc(withoutKey))));
-
-const mergeWithResource = (withKey, withoutKey, fn) => converge(lift(merge), [
-    Future.of,
-    compose(addRemoveKey(withKey, withoutKey), fn, prop('id'))
-]);
-
-const postWithComments = traverse(Future.of, mergeWithResource('comments', 'postId', getComments));
-const userWithPosts = mergeWithResource('posts', 'userId', compose(chain(postWithComments), getPosts));
-
-const getUserWithPosts = composeK(userWithPosts, getUser);
-
-
-/* -------------------------- 2 -------------------------- */
-
-const getUserWithPosts = id => getUser(id)
-    .chain(user => getPosts(user.id)
-        .chain(traverse(Future.of, post => getComments(post.id)
-            .map(comments => ({
-                ...dissoc('userId', post),
-                comments: comments.map(dissoc('postId'))
-            }))))
-        .map(posts => ({ ...user, posts }) ));
-
-/* ---------------------- END OF OR --------------------- */
-
-getUserWithPosts(1).fork(console.error, console.log);
+const getUserWithPosts = id =>
+    Future.of(nestUnder('posts'))
+        .ap(getUser(id))
+        .ap(getPosts(id)
+            .chain(traverse(Future.of, post => getComments(post.id)
+                .map(nestUnder('comments')(post)))));
 `}
             </Highlight>
+            <p>
+                {Tags(['traverse', 'merge', 'useWith', 'identity', 'objOf'])}
+            </p>
         </Solution>
     </div>
 );
