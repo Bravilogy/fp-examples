@@ -147,6 +147,8 @@ const getUserWithPosts = id =>
         .ap(getPosts(id)
             .chain(traverse(Future.of, post => getComments(post.id)
                 .map(nestUnder('comments')(post)))));
+
+getUserWithPosts(1).fork(console.error, console.log);
 `}
             </Highlight>
             <p>
