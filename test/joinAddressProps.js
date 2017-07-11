@@ -15,9 +15,9 @@ describe('joinAddressProps function', function () {
     ];
 
     const address = {
-        address_line_1: 'aline1',
-        address_line_2: 'aline2',
-        address_line_3: 'aline3',
+        address_line_1: 'line1',
+        address_line_2: 'line2',
+        address_line_3: 'line3',
         city: 'London',
         county: 'Functional',
         postcode: 'FN1 33T'
@@ -29,9 +29,9 @@ describe('joinAddressProps function', function () {
 
     it('creates a string of address by joining address elements', function () {
         expect(joinAddressProps(1, elements, address))
-            .to.equal('aline1, aline2, aline3, London, Functional FN1 33T');
+            .to.equal('line1, line2, line3, London, Functional FN1 33T');
 
         expect(joinAddressProps(2, elements, address))
-            .to.equal('aline1, aline2, aline3, London Functional FN1 33T');
+            .to.equal('line1, line2, line3, London Functional FN1 33T');
     });
 });

@@ -9,12 +9,7 @@ import '../scss/app.scss'
 
 const store = createStore(reducer);
 
-function bootstrap() {
-    ReactDOM.render(
-        <Provider store={store}>{routes}</Provider>,
-        document.getElementById('app')
-    );
-}
-
-store.subscribe(bootstrap);
-bootstrap();
+ReactDOM.render(
+  <Provider store={store}>{routes}</Provider>,
+  document.getElementById('app')
+);

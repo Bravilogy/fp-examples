@@ -23,11 +23,11 @@ const titles = [
 ];
 
 const descriptions = [
-    'You are one step closer to becoming fully <strong>functional</strong>.',
-    'You can now haz <strong>cheez</strong>, safely!',
-    'You can now speak <strong>Funk Chanel</strong>.',
-    'Welcome to <strong>Funk Chanel</strong>.',
-    'The world is functional, again.'
+    <span>You are one step closer to becoming fully <strong>functional</strong>.</span>,
+    <span>You can now haz <strong>cheez</strong>, safely!</span>,
+    <span>You can now speak <strong>Funk Chanel</strong>.</span>,
+    <span>Welcome to <strong>Funk Chanel</strong>.</span>,
+    <span>The world is functional, again.</span>,
 ];
 
 export default () => (
@@ -35,6 +35,6 @@ export default () => (
         <div className='message-header'>
             <p>{getRandom(titles)}</p>
         </div>
-        <div className='message-body' dangerouslySetInnerHTML={{__html: getRandom(descriptions)}} />
+        <div className='message-body'>{getRandom(descriptions)}</div>
     </article>
 );
